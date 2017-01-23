@@ -167,8 +167,12 @@ public class APESuperHUD {
 
     private static func showHud(title: String = "", text: [String] = [""], icon: UIImage? = nil, duration: Double = -1, sksFileName: String? = nil, presentingView: UIView, funnyMessagesLanguage: LanguageType? = nil, completion: (() -> Void)? = nil) {
 
+		let isFunnyMessages = funnyMessagesLanguage != nil
+		let isMessages = text.count > 1
+		let isLoadingIndicator = !isFunnyMessages && !isMessages && icon == nil && title.isEmpty
+
         let hudView = createHudViewIfNeeded(presentingView: presentingView)
-        if hudView.isActivityIndicatorSpinnning {
+        if hudView.isActivityIndicatorSpinnning && !isLoadingIndicator {
 
             // Hide HUD view, and call same function when it's done
             hudView.hideLoadingActivityIndicator(completion: { _ in
@@ -183,8 +187,6 @@ public class APESuperHUD {
             hudView.addParticleEffect(sksfileName: fileName)
         }
 
-        let isFunnyMessages = funnyMessagesLanguage != nil
-        let isMessages = text.count > 1
         hudView.isActiveTimer = isFunnyMessages || isMessages
 
         if isFunnyMessages {
