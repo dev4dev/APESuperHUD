@@ -83,9 +83,6 @@ public class APESuperHUD {
         showHud(text: Array(arrayLiteral: message), icon: icon, duration: duration, sksFileName: particleEffectFileName, presentingView: presentingView, completion: completion)
     }
 
-
-
-
     // MARK: API With IconType
 
     /**
@@ -102,9 +99,6 @@ public class APESuperHUD {
         let defaultIcon = iconImage(imageName: icon.rawValue)
         showHud(text: Array(arrayLiteral: message), icon: defaultIcon, duration: duration, sksFileName: particleEffectFileName , presentingView: presentingView, completion: completion)
     }
-
-
-
 
     // MARK: API With Title
 
@@ -152,9 +146,6 @@ public class APESuperHUD {
         }
     }
 
-
-
-
     // MARK: API Remove
 
     /**
@@ -172,20 +163,15 @@ public class APESuperHUD {
         }
     }
 
-
-
-
     // MARK: - Private functions
 
     private static func showHud(title: String = "", text: [String] = [""], icon: UIImage? = nil, duration: Double = -1, sksFileName: String? = nil, presentingView: UIView, funnyMessagesLanguage: LanguageType? = nil, completion: (() -> Void)? = nil) {
 
         let hudView = createHudViewIfNeeded(presentingView: presentingView)
-
         if hudView.isActivityIndicatorSpinnning {
 
             // Hide HUD view, and call same function when it's done
             hudView.hideLoadingActivityIndicator(completion: { _ in
-
                 showHud(text: text, icon: icon, duration: duration, sksFileName: sksFileName, presentingView: presentingView, completion: completion)
                 return
             })
@@ -225,14 +211,10 @@ public class APESuperHUD {
     }
 
     private static func iconImage(imageName: String) -> UIImage? {
-
-        let iconImage = UIImage(named: imageName, in: Bundle(for: APESuperHUD.self), compatibleWith: nil)
-
-        return iconImage
+        return UIImage(named: imageName, in: Bundle(for: APESuperHUD.self), compatibleWith: nil)
     }
 
     static func createHudViewIfNeeded(presentingView: UIView) -> HudView {
-
         if let hudView = getHudView(presentingView: presentingView) {
             return hudView
         }
@@ -244,7 +226,6 @@ public class APESuperHUD {
     }
 
     static func createHudView(presentingView: UIView) -> HudView {
-
         let hudView = HudView.create()
         presentingView.addSubview(hudView)
 
@@ -252,13 +233,10 @@ public class APESuperHUD {
     }
 
     private static func getHudView(presentingView: UIView) -> HudView? {
-
         for subview in presentingView.subviews {
-
             if let hudview = subview as? HudView {
                 return hudview
             }
-
         }
 
         return nil
