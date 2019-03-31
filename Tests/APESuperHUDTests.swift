@@ -77,12 +77,12 @@ class APESuperHUDTests: XCTestCase {
         let testView = getTestView()
         
         // Test show
-        APESuperHUD.showOrUpdateHUD(loadingIndicator: .standard, message: originalText, presentingView: testView)
+        APESuperHUD.showOrUpdateHUD(loadingIndicator: .standard, messages: originalText, presentingView: testView)
         validateShow(view: testView)
         validateLoadIndicator(view: testView, informationText: self.originalText)
         
         // Test update
-        APESuperHUD.showOrUpdateHUD(loadingIndicator: .standard, message: updatedTest, presentingView: testView)
+        APESuperHUD.showOrUpdateHUD(loadingIndicator: .standard, messages: updatedTest, presentingView: testView)
         validateUpdateLoadingIndicator(view: testView, description: "Delay update loading indicator with info")
         
         // Test remove
@@ -109,7 +109,7 @@ class APESuperHUDTests: XCTestCase {
         let testView = getTestView()
         
         // Test show
-        APESuperHUD.showOrUpdateHUD(loadingIndicator: .standard, message: "", presentingView: testView)
+        APESuperHUD.showOrUpdateHUD(loadingIndicator: .standard, messages: "", presentingView: testView)
         validateShow(view: testView)
         validateLoadIndicator(view: testView, informationText: "")
         
@@ -204,9 +204,9 @@ class APESuperHUDTests: XCTestCase {
         
         // Test show and auto remove
         let asyncExpectation = expectation(description: "Completion duration message with default icon, duration and completion")
-        APESuperHUD.showOrUpdateHUD(icon: .checkMark, message: originalText, duration: 3.0, presentingView: testView, completion: { _ in
+        APESuperHUD.showOrUpdateHUD(icon: .checkMark, message: originalText, duration: 3.0, particleEffectFileName: nil, presentingView: testView) {
             asyncExpectation.fulfill()
-        })
+        }
         validateShow(view: testView)
         validateMessage(view: testView, informationText: originalText)
         
@@ -246,7 +246,7 @@ class APESuperHUDTests: XCTestCase {
         let testView = getTestView()
         
         let asyncExpectation = expectation(description: "Completion duration message with image ccon and completion")
-        APESuperHUD.showOrUpdateHUD(icon: createTestImage(width: 200, height: 200), message: originalText, presentingView: testView, completion: { _ in
+        APESuperHUD.showOrUpdateHUD(icon: createTestImage(width: 200, height: 200), message: originalText, presentingView: testView, completion: {
             asyncExpectation.fulfill()
         })
         validateShow(view: testView)
@@ -287,9 +287,9 @@ class APESuperHUDTests: XCTestCase {
         let testView = getTestView()
         
         let asyncExpectation = expectation(description: "Completion duration message with image icon, duration and completion")
-        APESuperHUD.showOrUpdateHUD(icon: createTestImage(width: 200, height: 200), message: originalText, duration: 3.0, presentingView: testView, completion: { _ in
+        APESuperHUD.showOrUpdateHUD(icon: createTestImage(width: 200, height: 200), message: originalText, duration: 3.0, particleEffectFileName: nil, presentingView: testView) {
             asyncExpectation.fulfill()
-        })
+        }
         validateShow(view: testView)
         validateMessage(view: testView, informationText: originalText)
         
@@ -308,7 +308,7 @@ class APESuperHUDTests: XCTestCase {
         
         let testView = getTestView()
         
-        APESuperHUD.showOrUpdateHUD(loadingIndicator: .standard, message: originalText, presentingView: testView)
+        APESuperHUD.showOrUpdateHUD(loadingIndicator: .standard, messages: originalText, presentingView: testView)
         validateShow(view: testView)
         let hudView = getHudView(view: testView)
         hudView?.tapGestureRecognized(sender: "" as AnyObject)
@@ -335,7 +335,7 @@ class APESuperHUDTests: XCTestCase {
     
     func validateRemove(view: UIView, description: String) {
         let asyncExpectation = expectation(description: description)
-        APESuperHUD.removeHUD(animated: true, presentingView: view, completion: { _ in
+        APESuperHUD.removeHUD(animated: true, presentingView: view, completion: {
             asyncExpectation.fulfill()
         })
         self.waitForExpectations(timeout: 8) { error in
